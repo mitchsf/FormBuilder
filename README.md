@@ -4,7 +4,7 @@ A comprehensive Arduino library for creating responsive HTML forms on ESP32 devi
 the Strings, but it is typically run on initial configuration, and when settings are changed. Don't run the update method in loop(), once form updates are complete. This library leaves
 saveing data and connecting to WiFi after AP has closed, to the application. It is strictly a form builder.
 
-This library was almost exclusively written and documented by Anthropic Claude 4.
+This library was mostly written and documented by Anthropic Claude Sonnet 4.
 
 ## Features
 
@@ -138,13 +138,10 @@ Color pickers use 24-bit integers (0xRRGGBB format):
 
 ```cpp
 form.addColorPicker("Theme Color", 0xFF0000);  // Red
-form.addColorPicker("Background", 0x2563eb);   // Blue
+form.addColorPicker("Background", 0x0000FF);   // Blue
 
-// In callback, convert back:
-int colorValue = value.toInt();
-int red = (colorValue >> 16) & 0xFF;
-int green = (colorValue >> 8) & 0xFF;
-int blue = colorValue & 0xFF;
+// In callback, value is converted back to int:
+int colorValue = value;
 ```
 
 ## Compatibility
