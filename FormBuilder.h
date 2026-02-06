@@ -26,18 +26,30 @@
 #define MAX_VALID 10
 #endif
 
+// Maximum number of form fields
+#ifndef MAX_FORM_FIELDS
+#define MAX_FORM_FIELDS 100
+#endif
+
 /**
  * Callback function type for handling form data
  * @param fieldIndex The index of the form field (1-based)
  * @param value The string value received from the form
+ * @param valueChanged True if value differs from the default, false if unchanged
  */
-typedef void (*FormDataCallback)(int fieldIndex, String value);
+typedef void (*FormDataCallback)(int fieldIndex, String value, bool valueChanged);
 
 /**
  * Callback function type for building the form
  * This function should call addText, addDropDown, etc. to build the form
  */
 typedef void (*FormBuilderCallback)();
+
+/**
+ * Callback function type for when all form fields have been processed
+ * Called after all individual field callbacks are complete
+ */
+typedef void (*FormCompleteCallback)();
 
 /**
  * FormBuilder Class
@@ -70,6 +82,12 @@ public:
     void setFormBuilder(FormBuilderCallback callback);
 
     /**
+     * Set the callback function for when all form processing is complete
+     * @param callback Function to call after all fields have been processed
+     */
+    void setFormCompleteCallback(FormCompleteCallback callback);
+
+    /**
      * Set the page title displayed in browser tab and header
      * @param title The title to display
      */
@@ -80,6 +98,12 @@ public:
      * Call this in your main loop when form functionality is needed
      */
     void handleClient();
+
+    /**
+     * Clean up and free resources when form functionality no longer needed
+     * Call this after configuration is complete to free memory
+     */
+    void cleanup();
 
     /**
      * Add a subheading to organize form sections
@@ -119,6 +143,57 @@ public:
      */
     void addColorPicker(String prompt, int defaultColor);
 
+    /**
+     * Add a number input field with range validation
+     * @param prompt Display label for the field
+     * @param minVal Minimum allowed value
+     * @param maxVal Maximum allowed value
+     * @param step Step increment (default 1)
+     * @param defaultValue Default numeric value
+     */
+    void addNumber(String prompt, int minVal, int maxVal, int step, int defaultValue);
+
+    /**
+     * Add a range slider for numeric values
+     * @param prompt Display label for the field
+     * @param minVal Minimum value
+     * @param maxVal Maximum value
+     * @param step Step increment (default 1)
+     * @param defaultValue Default slider value
+     */
+    void addRange(String prompt, int minVal, int maxVal, int step, int defaultValue);
+
+    /**
+     * Add a time picker input
+     * @param prompt Display label for the field
+     * @param defaultTime Default time as integer (e.g., 1356 for 13:56)
+     * @param includeSeconds If true, includes seconds in time picker
+     */
+    void addTime(String prompt, int defaultTime, bool includeSeconds = false);
+
+    /**
+     * Add a password input field
+     * @param prompt Display label for the field
+     * @param defaultValue Default password value
+     */
+    void addPassword(String prompt, String defaultValue);
+
+    /**
+     * Add a checkbox input
+     * @param prompt Display label for the checkbox
+     * @param defaultChecked Default checked state
+     */
+    void addCheckbox(String prompt, bool defaultChecked);
+
+    /**
+     * Add a radio button group with comma-separated options
+     * @param prompt Display label for the radio group
+     * @param options Comma-separated list of options
+     * @param defaultIndex Index of default selected option (0-based)
+     * @param returnText If true, returns option text; if false, returns index
+     */
+    void addRadio(String prompt, String options, int defaultIndex, bool returnText = false);
+
 private:
     // Internal structure for field configuration
     struct FieldSettings {
@@ -136,6 +211,20 @@ private:
         int rangeDefault;
         bool isColorPicker;
         int colorDefault;
+        // New fields for additional input types
+        bool isNumberInput;
+        int numberMin, numberMax, numberStep, numberDefault;
+        bool isRangeSlider;
+        int rangeStep;
+        bool isTimeInput;
+        bool timeIncludeSeconds;
+        bool isPasswordInput;
+        bool isCheckbox;
+        bool checkboxDefault;
+        bool isRadio;
+        String radioGroup;
+        String radioValue;
+        bool radioSelected;
     };
 
     // Private member variables
@@ -143,6 +232,7 @@ private:
     WiFiClient _client;
     FormDataCallback _callback;
     FormBuilderCallback _formBuilderCallback;
+    FormCompleteCallback _formCompleteCallback;
     FieldSettings _settings;
     
     // Form generation state
@@ -150,6 +240,9 @@ private:
     int _fieldTag;
     int _numberFields;
     String _pageTitle;
+    
+    // Storage for default values to detect changes
+    String _fieldDefaults[MAX_FORM_FIELDS];
 
     // Private methods
     void clearSettings();
@@ -157,10 +250,16 @@ private:
     void renderTextInput();
     void renderColorPicker();
     void renderSubheading(String text);
+    void renderNumberInput();
+    void renderRangeSlider();
+    void renderTimeInput();
+    void renderPasswordInput();
+    void renderCheckbox();
+    void renderRadio();
     void htmlStart();
     void htmlEnd();
     void getParameters();
     String urlDecode(String input);
 };
 
-#endif // FORMBUILDER_H
+#endif // FORMBUILDERDEV_H
