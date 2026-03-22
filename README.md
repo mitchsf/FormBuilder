@@ -3,7 +3,7 @@
 A comprehensive Arduino library for creating responsive HTML forms on ESP32 devices. Build beautiful web interfaces for device configuration with minimal code. This makes extensive use of Strings, but it is typically run on initial configuration, and when settings are changed. Don't run the update method in loop(), once form updates are complete. This library leaves
 saving data and connecting to WiFi after AP has closed, to the application. It is strictly a form builder.
 
-This library was mostly written and documented by Anthropic Claude Sonnet 46 Extended.
+This library was mostly written and documented by Anthropic Claude Sonnet 4.6 Extended.
 
 ## Features
 
