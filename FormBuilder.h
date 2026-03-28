@@ -18,7 +18,7 @@
 
 // Maximum number of options per dropdown field
 #ifndef MAX_FIELD_OPTIONS
-#define MAX_FIELD_OPTIONS 20
+#define MAX_FIELD_OPTIONS 50
 #endif
 
 // Maximum number of valid values per field
@@ -92,6 +92,12 @@ public:
      * @param title The title to display
      */
     void setTitle(String title);
+
+    /**
+     * Add custom CSS to be injected into the page
+     * @param css Custom CSS rules to add to the stylesheet
+     */
+    void addCustomCSS(String css);
 
     /**
      * Handle incoming client connections and form submissions
@@ -194,6 +200,13 @@ public:
      */
     void addRadio(String prompt, String options, int defaultIndex, bool returnText = false);
 
+    /**
+     * Add a hidden field — occupies a field index but renders nothing visible.
+     * Use to preserve field numbering when a preset slot is unused.
+     * @param defaultValue Value returned on form submit
+     */
+    void addHidden(String defaultValue);
+
 private:
     // Internal structure for field configuration
     struct FieldSettings {
@@ -240,6 +253,7 @@ private:
     int _fieldTag;
     int _numberFields;
     String _pageTitle;
+    String _customCSS;
     
     // Storage for default values to detect changes
     String _fieldDefaults[MAX_FORM_FIELDS];
@@ -256,6 +270,7 @@ private:
     void renderPasswordInput();
     void renderCheckbox();
     void renderRadio();
+    void renderHidden();
     void htmlStart();
     void htmlEnd();
     void getParameters();

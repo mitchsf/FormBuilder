@@ -338,6 +338,15 @@ void FormBuilder::addRadio(String prompt, String options, int defaultIndex, bool
 }
 
 /**
+ * Add a hidden form field (invisible, preserves field numbering)
+ */
+void FormBuilder::addHidden(String defaultValue) {
+    clearSettings();
+    _settings.textDefault = defaultValue;
+    renderHidden();
+}
+
+/**
  * Clear all settings variables
  */
 void FormBuilder::clearSettings() {
@@ -644,6 +653,19 @@ void FormBuilder::renderRadio() {
     }
     
     _client.println("</div>");
+}
+
+/**
+ * Render hidden field — no visible HTML, just a hidden input to hold the slot
+ */
+void FormBuilder::renderHidden() {
+    _fieldTag++;
+    _numberFields++;
+    String fieldId = "x" + String(_fieldTag);
+
+    _fieldDefaults[_numberFields - 1] = _settings.textDefault;
+
+    _client.println("<input type='hidden' id='" + fieldId + "' value='" + _settings.textDefault + "'>");
 }
 
 /**
