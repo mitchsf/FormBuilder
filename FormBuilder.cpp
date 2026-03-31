@@ -722,16 +722,16 @@ void FormBuilder::htmlStart() {
     
     _client.println("#header {");
     _client.println("  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);");
-    _client.println("  color: white; text-align: center; padding: 0px 20px; font-size: 1.1rem;");
+    _client.println("  color: white; text-align: center; font-size: 1.7rem;");
     _client.println("  font-weight: 700; margin: 0; letter-spacing: -0.5px;");
-    _client.println("  border-radius: 16px 16px 0 0; line-height: 0.9;");
+    _client.println("  border-radius: 16px 16px 0 0; padding: 15px; display: flex; align-items: center; justify-content: center;");
     _client.println("}");
     
-    _client.println("#inputs { padding: 40px; margin-top: 5px; }");
+    _client.println("#inputs { padding: 20px 40px; margin-top: 0; }");
     
     _client.println(".subheading {");
     _client.println("  font-size: 1.5rem; font-weight: 600; color: var(--text-primary);");
-    _client.println("  margin: 40px 0 20px 0; padding-bottom: 10px;");
+    _client.println("  margin: 15px 0 20px 0; padding-bottom: 10px;");
     _client.println("  border-bottom: 2px solid var(--border);");
     _client.println("}");
     _client.println(".subheading:first-child { margin-top: 0; }");
@@ -847,7 +847,7 @@ void FormBuilder::htmlStart() {
     _client.println(".success-message {");
     _client.println("  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);");
     _client.println("  color: #065f46; padding: 32px; border-radius: 12px; text-align: center;");
-    _client.println("  font-size: 1.3rem; font-weight: 600; border: 2px solid #34d399;");
+    _client.println("  font-size: 1.6rem; font-weight: 600; border: 2px solid #34d399;");
     _client.println("  animation: slideIn 0.3s ease;");
     _client.println("}");
     
@@ -858,7 +858,7 @@ void FormBuilder::htmlStart() {
     
     _client.println("@media (max-width: 600px) {");
     _client.println("  body { padding: 10px; }");
-    _client.println("  #header { font-size: 2rem; padding: 30px 20px; }");
+    _client.println("  #header { padding: 15px; }");
     _client.println("  #inputs { padding: 20px; }");
     _client.println("}");
     
