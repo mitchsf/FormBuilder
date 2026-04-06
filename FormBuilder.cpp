@@ -848,15 +848,11 @@ void FormBuilder::htmlStart() {
     _client.println(".save-button:active { transform: translateY(0); }");
     
     _client.println(".success-message {");
-    _client.println("  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);");
-    _client.println("  color: #065f46; padding: 32px; border-radius: 12px; text-align: center;");
-    _client.println("  font-size: 1.6rem; font-weight: 600; border: 2px solid #34d399;");
-    _client.println("  animation: slideIn 0.3s ease;");
-    _client.println("}");
-    
-    _client.println("@keyframes slideIn {");
-    _client.println("  from { opacity: 0; transform: translateY(-20px); }");
-    _client.println("  to { opacity: 1; transform: translateY(0); }");
+    _client.println("  position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);");
+    _client.println("  background: rgba(5,150,105,0.95); color: white; padding: 30px 50px;");
+    _client.println("  border-radius: 16px; font-size: 1.6rem; font-weight: 700;");
+    _client.println("  box-shadow: 0 20px 40px rgba(0,0,0,0.3); z-index: 1000;");
+    _client.println("  transition: opacity 0.6s ease; pointer-events: none; white-space: nowrap;");
     _client.println("}");
     
     _client.println("@media (max-width: 600px) {");
@@ -932,13 +928,12 @@ void FormBuilder::htmlEnd() {
     _client.println("    }");
     _client.println("  }");
 
-    // Update UI (clear form and show success message)
+    // Clear form and show success overlay (style matches LiveFormBuilder)
     _client.println("  document.body.innerHTML = '';");
-    _client.println("  document.body.style.cssText = 'font-family: -apple-system, BlinkMacSystemFont, \\'Segoe UI\\', Roboto, sans-serif; background: #ffffff; margin: 0; padding: 20px; color: #1e293b; line-height: 1.6;';");
-    _client.println("  var successBox = document.createElement('div');");
-    _client.println("  successBox.className = 'success-message';");
-    _client.println("  successBox.textContent = '✓ Configuration Saved!';");
-    _client.println("  document.body.appendChild(successBox);");
+    _client.println("  var o = document.createElement('div');");
+    _client.println("  o.className = 'success-message';");
+    _client.println("  o.textContent = '\\u2713 Configuration Saved!';");
+    _client.println("  document.body.appendChild(o);");
 
     // Send the AJAX request with collected data
     _client.println("  if (!netText.endsWith('?') && !netText.endsWith('&')) {");
