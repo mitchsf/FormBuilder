@@ -932,7 +932,7 @@ void FormBuilder::htmlEnd() {
     _client.println("  document.body.innerHTML = '';");
     _client.println("  var o = document.createElement('div');");
     _client.println("  o.className = 'success-message';");
-    _client.println("  o.textContent = '\\u2713 Configuration Saved!';");
+    _client.println("  o.textContent = '\\u2713 Settings Saved';");
     _client.println("  document.body.appendChild(o);");
 
     // Send the AJAX request with collected data
