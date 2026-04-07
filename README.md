@@ -2,7 +2,7 @@
 
 A comprehensive Arduino library for creating responsive HTML forms on ESP32 devices. Build web interfaces for device configuration with minimal code. The form is served from a `WiFiServer`, submitted via AJAX, and parsed back through a per-field callback. Saving data and reconnecting WiFi after AP teardown are left to the application — this library is strictly a form builder.
 
-This library makes extensive use of Strings, but it is typically run only during initial configuration or when settings change. Stop calling `handleClient()` once form updates are complete. Call `cleanup()` to free memory.
+This library makes extensive use of Strings, but it is typically run only during initial configuration or when settings change, followed by a reboot. Stop calling `handleClient()` once form updates are complete. Call `cleanup()` to free memory.
 
 This library was mostly written and documented by Anthropic Claude Sonnet 4.6 Extended.
 
